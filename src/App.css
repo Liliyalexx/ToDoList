@@ -4,17 +4,18 @@
   padding: 2rem;
   text-align: center;
 }
-
-
-.app {
-  background-image: url('/img/img.jpeg');
+body {
+  background-image: url('/img/backgroundImage.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
+}
+
+.todo-text {
+  color: #bfd6d8;
+}
+
+.todo-text.complete {
+  color: #AAA;
 }

@@ -61,7 +61,9 @@ console.log(todo)
 
   
   return (
+     
     <>
+    <div className="app">
       {' '}
       <h1>Todo List</h1>
       <form onSubmit={handleSubmit}>
@@ -75,7 +77,9 @@ console.log(todo)
       {todo.map((todo) => {
         return <Todo key={todo.id} todo={todo} dispatch={dispatch} />;
       })}
+   </div>
     </>
+    
   );
 }
 
