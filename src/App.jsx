@@ -3,11 +3,12 @@ import './App.css'
 import Todo from './Todo.jsx'
 
 export const ACTIONS = {
-  ADD_TODO:'add-todo',
+  ADD_TODO: 'add-todo',
   TOGGLE_TODO: 'toggle-todo',
-  DELETE_TODO:'delete-todo'
-
-}
+  DELETE_TODO: 'delete-todo',
+  EDIT_TODO: 'edit-todo',
+  SAVE_TODO: 'save-todo',
+};
 
 function reducer(todos, action){
 switch(action.type){
@@ -21,7 +22,21 @@ switch(action.type){
      return todo
     })
   case ACTIONS.DELETE_TODO:
-    return todos.filter(todo=> todo.id!==action.payload.id)
+    return todos.filter(todo=> todo.id!==action.payload.id);
+    case ACTIONS.EDIT_TODO:
+      return todos.map(todo =>{
+        if(todo.id === action.payload.id){
+          return{... todo, isEditing: true};
+        }
+        return todo;
+      });
+      case ACTIONS.SAVE_TODO:
+        return todos.map(todo =>{
+          if(todo.id === action.payload.id){
+            return {... todo, name: action.payload.newName, esEditing:false};
+          }
+          return todo;
+        });
     default:
       return todos
 
@@ -29,7 +44,7 @@ switch(action.type){
 
 }
 function newTodo(name){
-  return {id: Date.now(), name: name, complete: false}
+  return {id: Date.now(), name: name, complete: false, isEditing:false};
 }
 
 export default function App  () {
@@ -43,15 +58,24 @@ export default function App  () {
   }
 
 console.log(todo)
+
+  
   return (
     <>
-      <form onSubmit = {handleSubmit}>
-       <input type="text" value={name} onChange={e => setName( e.target.value)}/> 
-       </form>
-       {todo.map(todo => {
-        return <Todo key = {todo.id} todo={todo} dispatch={dispatch}/>
-       })}
+      {' '}
+      <h1>Todo List</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type='submit'>Add Todo</button>
+      </form>
+      {todo.map((todo) => {
+        return <Todo key={todo.id} todo={todo} dispatch={dispatch} />;
+      })}
     </>
-  )
+  );
 }
 
